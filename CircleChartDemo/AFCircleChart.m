@@ -99,7 +99,9 @@ static NSString * const bottomLayerString = @"bottomLayer";
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.delegate touchedCircleChart:self];
+    if ([delegate respondsToSelector:@selector(touchedCircleChart:)]) {
+        [self.delegate touchedCircleChart:self];
+    }
 }
 
 

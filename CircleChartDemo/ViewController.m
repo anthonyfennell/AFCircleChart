@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "AFCircleChart.h"
 
-@interface ViewController ()
+@interface ViewController () <AFCircleChartDelegate>
 
 @property (weak, nonatomic) IBOutlet AFCircleChart *chart2;
 
@@ -25,7 +25,7 @@
     AFCircleChart *chart1 = [[AFCircleChart alloc] initWithFrame:chartRect];
     [chart1 setLineWidth:22 atValue:337 totalValue:500 chartColor:[UIColor magentaColor]
        descriptionString:@"people"];
-    
+    chart1.delegate = self;
     [chart1 animatePath];
     
     
@@ -33,6 +33,7 @@
             descriptionString:@"calories"];
     self.chart2.valuesFontSize = 26;
     self.chart2.descriptionFontSize = 18;
+    self.chart2.delegate = self;
     [self.chart2 animatePath];
     
     
@@ -46,7 +47,14 @@
     [self.chart2 reAnimateChartAtValue:randomValue totalValue:randomTotal];
 }
 
+#pragma mark - AFCircleChart delegate
 
+- (void)touchedCircleChart:(AFCircleChart *)sender
+{
+    int randomTotal = arc4random() % 3000;
+    int randomValue = arc4random() % (randomTotal + 100);
+    [sender reAnimateChartAtValue:randomValue totalValue:randomTotal];
+}
 
 
 - (void)didReceiveMemoryWarning {
