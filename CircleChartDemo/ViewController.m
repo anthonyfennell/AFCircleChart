@@ -29,7 +29,7 @@
     [chart1 animatePath];
     
     
-    [self.chart2 setLineWidth:18 atValue:980 totalValue:3000 chartColor:[UIColor orangeColor]
+    [self.chart2 setLineWidth:18 atValue:2300 totalValue:3000 chartColor:[UIColor orangeColor]
             descriptionString:@"calories"];
     self.chart2.valuesFontSize = 26;
     self.chart2.descriptionFontSize = 18;

@@ -38,12 +38,10 @@ static NSString * const bottomLayerString = @"bottomLayer";
 /// String displayed below value label
 @property (nonatomic) NSString *descriptionString;
 
-/// Start angle(radians) that the graph starts at
+/// Start angle(degrees) that the graph starts at
 @property (nonatomic) double startAngle;
-/// End angle(radians) that the graph reaches around the circle
+/// End angle(degrees) that the graph reaches around the circle
 @property (nonatomic) double endAngle;
-/// End angle(degrees)
-@property (nonatomic) double endAngleDegrees;
 /// Radius of circle
 @property (nonatomic) double radius;
 /// Center point of chart and view
@@ -210,16 +208,18 @@ static NSString * const bottomLayerString = @"bottomLayer";
     
     if (self.value < self.total) {
         [path addArcWithCenter:self.centerOfChart radius:self.radius
-                    startAngle:self.startAngle endAngle:self.endAngle clockwise:YES];
+                    startAngle:degreesToRadians(self.startAngle)
+                      endAngle:degreesToRadians(self.endAngle) clockwise:YES];
     } else {
         // If (value > total) then the entire chart must be filled.
         // Therefore, two arcs must be connected otherwise the entire circle
         // won't connect if using M_PI*3/2 as start and end angle
-        [path addArcWithCenter:self.centerOfChart radius:self.radius
-                    startAngle:self.startAngle endAngle:0 clockwise:YES];
         UIBezierPath *addedPath = [[UIBezierPath alloc] init];
+        [path addArcWithCenter:self.centerOfChart radius:self.radius
+                    startAngle:degreesToRadians(self.startAngle)
+                      endAngle:0 clockwise:YES];
         [addedPath addArcWithCenter:self.centerOfChart radius:self.radius
-                    startAngle:0 endAngle:self.startAngle clockwise:YES];
+                    startAngle:0 endAngle:degreesToRadians(self.startAngle) clockwise:YES];
         [path appendPath:addedPath];
     }
     
@@ -268,25 +268,22 @@ static NSString * const bottomLayerString = @"bottomLayer";
 /// Find the start and end angles of where the chart starts and stops
 - (void)setStartAndEndAngles
 {
-    self.startAngle = M_PI * 3 / 2;
+    self.startAngle = 270;
     
     if (self.value > self.total) {
-        self.endAngle = M_PI * 2;
         return;
     } else if (self.value == 0) {
-        self.endAngle = M_PI * 3 / 2;
+        self.endAngle = 270;
         return;
     }
     
-    double ratio = self.value / (double)self.total;
-    double angle = ratio * 360;
-    self.endAngleDegrees = angle;
+    float angle = self.value / (float)self.total * 360;
     
     if (angle < 90) {
-        self.endAngle = self.startAngle + degreesToRadians(angle);
+        self.endAngle = self.startAngle + angle;
     } else {
         angle -= 90;
-        self.endAngle = degreesToRadians(angle);
+        self.endAngle = angle;
     }
 }
 
