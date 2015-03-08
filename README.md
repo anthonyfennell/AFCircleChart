@@ -7,3 +7,9 @@ graph. Circular width and colors are able to be changed.
 
 This is a demo application that shows how to produce the dial chart and shows
 a few variations of how to re-animate the chart while giving it different values.
+
+
+
+
+![alt tag](https://cloud.githubusercontent.com/assets/3957741/6544361/1ba093ca-c512-11e4-93fd-293d0740fd1a.png)
+
