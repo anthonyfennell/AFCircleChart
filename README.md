@@ -1,5 +1,6 @@
 # AFCircleChart
 
+AFCircleChart class in Objective-C:
 A circular chart displayed as a percentage of coverage over a circle. 
 A label showing the values of the graph are displayed in the center of the chart.
 Underneath is another label displaying a string describing the contents of the 
